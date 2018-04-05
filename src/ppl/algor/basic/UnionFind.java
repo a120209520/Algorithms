@@ -6,14 +6,13 @@ import ppl.algor.util.TimeCounter;
 
 public class UnionFind
 {
-	public static long counter = 0; //记录效率
 	static TimeCounter tc = new TimeCounter();
 
-	public static void basic(int type, String file)
+	public static void basic(UnionFinder uf, String file)
 	{
 		PairInt pis[] = FileDataIO.loadPairInt(file);
-		UnionFinder uf = createUnionFinder(type, pis.length);
-		tc.start(createTag(type));
+		uf.init(pis.length);
+		tc.start(uf.getTag());
 		for(PairInt pi:pis)
 		{
 			uf.connect(pi.getVal1(), pi.getVal2());
@@ -21,38 +20,18 @@ public class UnionFind
 		tc.stop();
 		uf.print();
 	}
-	private static UnionFinder createUnionFinder(int type, int len)
-	{
-		switch(type)
-		{
-			case 1: return new UnionFind001(len);
-			case 2: return new UnionFind002(len);
-			case 3: return new UnionFind003(len);
-		}
-		return null;
-	}
-	private static String createTag(int type)
-	{
-		switch(type)
-		{
-			case 1: return "cal-001";
-			case 2: return "cal-002";
-			case 3: return "cal-003";
-		}
-		return null;
-	}
 	
 	public static void speedTest()
 	{
-		//basic(1,"largeUF.txt");  //too long
-		basic(2,"largeUF.txt");
-		basic(3,"largeUF.txt");
+		//basic(new UnionFind001(),"largeUF.txt");  //too long
+		basic(new UnionFind002(),"largeUF.txt");
+		basic(new UnionFind003(),"largeUF.txt");
 	}
 	public static void main(String[] args)
 	{
-//		basic(1,"mediumUF.txt");
-//		basic(2,"mediumUF.txt");
-//		basic(3,"mediumUF.txt");
+//		basic(new UnionFind001(),"mediumUF.txt");
+//		basic(new UnionFind002(),"mediumUF.txt");
+//		basic(new UnionFind003(),"mediumUF.txt");
 		speedTest();
 	}		
 }
@@ -61,7 +40,9 @@ abstract class UnionFinder
 {
 	int[] point = null;
 	int blockNum = 0;
+	abstract void init(int N);
 	abstract void connect(int p1, int p20);
+	abstract String getTag();
 	protected int find(int p) {return 0;}
 	protected boolean isConnected(int p1, int p2)
 	{
@@ -76,7 +57,8 @@ abstract class UnionFinder
 //quick-union算法
 class UnionFind001 extends UnionFinder
 {
-	public UnionFind001(int N)
+	@Override
+	public void init(int N)
 	{
 		blockNum = N;
 		point = new int[N];
@@ -95,7 +77,7 @@ class UnionFind001 extends UnionFinder
 			point[root2] = root1;
 			blockNum--;			
 		}
-	}		
+	}	
 	@Override
 	protected int find(int p)
 	{
@@ -105,13 +87,20 @@ class UnionFind001 extends UnionFinder
 		}
 		return p;
 	}
+
+	@Override
+	public String getTag()
+	{
+		return "UF001-quick-union";
+	}
 }
 
 //加权quick-union算法
 class UnionFind002 extends UnionFinder
 {
 	int[] treeSize = null;
-	public UnionFind002(int N)
+	@Override
+	public void init(int N)
 	{
 		blockNum = N;
 		point = new int[N];
@@ -151,6 +140,11 @@ class UnionFind002 extends UnionFinder
 		}
 		return p;
 	}
+	@Override
+	public String getTag()
+	{
+		return "UF002-weighted-quick-union";
+	}
 }
 
 
@@ -158,8 +152,8 @@ class UnionFind002 extends UnionFinder
 class UnionFind003 extends UnionFinder
 {
 	int[] treeSize = null;
-	
-	public UnionFind003(int N)
+	@Override
+	public void init(int N)
 	{
 		blockNum = N;
 		point = new int[N];
@@ -212,5 +206,10 @@ class UnionFind003 extends UnionFinder
 			t = tp;
 		}
 		return root;
+	}
+	@Override
+	public String getTag()
+	{
+		return "UF003-compress-weighted-quick-union";
 	}
 }

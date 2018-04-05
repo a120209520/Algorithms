@@ -14,7 +14,14 @@ public class FileDataIO
 {
 	private static String dataPath = "G:/OneDrive/Study/Java/lib/Alib/algs4-data/";
 	static TimeCounter tc = new TimeCounter();
+	
 	public static int[] loadInt(String fileName)
+	{	
+		Integer[] arr = loadInteger(fileName);
+		return unboxInt(arr);
+	}
+	
+	public static Integer[] loadInteger(String fileName)
 	{	
 		File f = new File(dataPath+fileName);
 		BufferedReader br = null;
@@ -29,8 +36,7 @@ public class FileDataIO
 			}
 			Integer[] arr = new Integer[ls.size()];
 			arr = ls.toArray(arr);
-			int[] res = unboxInt(arr);
-			return res;
+			return arr;
 		} catch (FileNotFoundException e)
 		{
 			e.printStackTrace();
