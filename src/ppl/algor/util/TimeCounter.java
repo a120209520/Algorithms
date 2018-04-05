@@ -15,7 +15,7 @@ public class TimeCounter
 		this.tag = "noName";
 		startTime = System.currentTimeMillis();
 	}
-	public void end()
+	public void stop()
 	{
 		endTime = System.currentTimeMillis();
 		System.out.println("["+tag+"]:"+(endTime-startTime)+"ms");

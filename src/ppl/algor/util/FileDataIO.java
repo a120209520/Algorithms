@@ -8,9 +8,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileIO
+import ppl.algor.struct.PairInt;
+
+public class FileDataIO
 {
-	private static String dataPath = "G:/OneDrive/Study/Java/Project/Algorithms/Alib/algs4-data/";
+	private static String dataPath = "G:/OneDrive/Study/Java/lib/Alib/algs4-data/";
 	static TimeCounter tc = new TimeCounter();
 	public static int[] loadInt(String fileName)
 	{	
@@ -43,6 +45,41 @@ public class FileIO
 		}
 	}
 	
+	public static PairInt[] loadPairInt(String fileName)
+	{	
+		File f = new File(dataPath+fileName);
+		BufferedReader br = null;
+		List<PairInt> ls = new ArrayList<>();
+		String temp = null;
+		int size = 0;
+		try
+		{
+			br = new BufferedReader(new FileReader(f));
+			size = Integer.parseInt(br.readLine().trim());
+			for(int i=0; i<size; i++)
+			{
+				temp = br.readLine().trim();
+				String[] s = temp.split(" ");
+				PairInt pi = new PairInt(Integer.parseInt(s[0]), Integer.parseInt(s[1]));
+				ls.add(pi);
+			}
+			PairInt[] arr = new PairInt[ls.size()];
+			arr = ls.toArray(arr);
+			return arr;
+		} catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+			return null;
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+			return null;
+		} finally
+		{
+			CloseUtil.closeAll(br);
+		}
+	}
+	
 	private static int[] unboxInt(Integer[] arr)
 	{
 		int[] res = new int[arr.length];
@@ -56,10 +93,12 @@ public class FileIO
 	public static void main(String[] args)
 	{
 		tc.start();
-		loadInt("largeW.txt");
-		tc.end();
+		//loadInt("largeW.txt");
+		//loadPairInt("tinyUF.txt");
+		tc.stop();
 	}
 }
+
 
 
 
