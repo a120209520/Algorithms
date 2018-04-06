@@ -30,12 +30,17 @@ public class SortTest
 		//largeW.txt
 		basic(new ShellSort(), "largeW.txt");
 		basic(new MergeSort(), "largeW.txt");
+		basic(new QuickSort(), "largeW.txt");
+		basic(new Quick3WaySort(), "largeW.txt");
+		basic(new HeapSort(), "largeW.txt");
 	}
 	public static void main(String[] args)
 	{
 		//basic(new MergeSort(), "TinyW.txt");
 		//basic(new ShellSort(), "MyTinyInt.txt");
 		//basic(new MergeSort(), "largeW.txt");
+		//basic(new QuickSort(), "largeW.txt");
+		//basic(new Quick3WaySort(), "largeW.txt");
 		speedTest();
 	}
 }

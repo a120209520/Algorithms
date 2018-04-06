@@ -10,8 +10,7 @@ import java.util.Arrays;
  */
 public class MergeSort extends SortFrame
 {
-	private Comparable[] ori = null;
-	private int factor = 8;   
+	private Comparable[] ori = null;   
 	
 	@Override
 	public void sort(Comparable[] a)
@@ -39,11 +38,12 @@ public class MergeSort extends SortFrame
 		for (int k=left; k<=right; k++)
 		{
 			ori[k] = a[k];
-			ifCounter++;
+			assignC++;
 		}
 		for(int k=left; k<=right; k++)
 		{
-			ifCounter += 2;
+			lessC++;
+			assignC++;
 			if(i >= mid+1) {a[k] = ori[j++]; continue;}
 			if(j >= right+1) {a[k] = ori[i++]; continue;}
 			if(less(ori[i],ori[j]))

@@ -23,9 +23,8 @@ public class ShellSort extends SortFrame
 			{
 				for (int j=i; j>=h && less(a[j],a[j-h]); j-=h)
 				{
-					ifCounter++;
-					exchCounter++;
-					SortFrame.exch(a, j, j-h);
+					lessC++;
+					exch(a, j, j-h);exchC++;
 				}
 			}
 			h = h/3;

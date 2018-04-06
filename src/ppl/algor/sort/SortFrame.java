@@ -4,8 +4,9 @@ import ppl.algor.util.TimeCounter;
 
 public abstract class SortFrame
 {
-	long ifCounter = 0;
-	long exchCounter = 0;
+	long lessC = 0;
+	long exchC = 0;
+	long assignC = 0;
 	public abstract void sort(Comparable[] a);
 	public abstract String getTag();
 	public void show(Comparable[] a)
@@ -18,16 +19,21 @@ public abstract class SortFrame
 	}
 	public long getCounter()
 	{
-		System.out.println("[less]:"+ifCounter+"[exch]:"+exchCounter);
-		System.out.println("[total]:"+(ifCounter+exchCounter*2));
-		return ifCounter+exchCounter*2;
+		System.out.println("[less]:"+lessC+"[assign]:"+assignC+"[exch]:"+exchC);
+		System.out.println("[total]:"+(lessC+assignC+exchC*2));
+		return lessC+assignC+exchC*2;
 	}
-	//执行10^10次[less]:3852ms
+	
 	protected static boolean less(Comparable x, Comparable y)
 	{
 		return x.compareTo(y) < 0;
 	}
-	//执行10^10次[exch]:6996ms，1次exch相当于2次less
+	
+	protected static boolean lesse(Comparable x, Comparable y)
+	{
+		return x.compareTo(y) <= 0;
+	}
+	
 	protected static void exch(Comparable[] a, int i, int j)
 	{
 		Comparable t = a[i];

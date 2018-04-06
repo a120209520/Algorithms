@@ -42,10 +42,11 @@ public class InsertSort extends SortFrame
 			int j;
 			for (j=i; j>0 && less(t,a[j-1]); j--)
 			{
-				ifCounter += 2;
+				lessC++;
+				assignC++;
 				a[j] = a[j-1]; //赋值耗时跟less时间差不多		 	
-			}
-			ifCounter++;     //赋值耗时跟less时间差不多
+			}   
+			assignC++;
 			a[j] = t;
 		}
 	}

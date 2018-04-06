@@ -19,14 +19,13 @@ public class SelectSort extends SortFrame
 			int min = i;
 			for(int j=i+1; j<N; j++)
 			{
-				ifCounter++;
+				lessC++;
 				if(less(a[j],a[min]))
 				{
 					min = j;
 				}
 			}
-			exchCounter++;
-			SortFrame.exch(a, i, min);
+			exch(a, i, min);exchC++;
 		}
 	}
 
