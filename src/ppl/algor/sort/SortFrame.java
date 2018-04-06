@@ -58,33 +58,5 @@ public abstract class SortFrame
 	 */
 	public static void main(String[] args)
 	{
-		/*
-		TimeCounter tc = new TimeCounter();
-		int a = 0; 
-		int b = 1;
-		tc.start("less");
-		for (long i=0; i<10000000000L; i++)
-		{
-			if(a>b)
-			{
-				
-			}
-		}
-		tc.stop();
-		tc.start("exch");
-		for (long i=0; i<10000000000L; i++)
-		{
-			int t = a;
-			a = b;
-			b = t;
-		}
-		tc.stop();
-		tc.start("assign");
-		for (long i=0; i<10000000000L; i++)
-		{
-			a = b;
-		}
-		tc.stop();
-		*/
 	}
 }

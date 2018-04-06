@@ -60,6 +60,6 @@ public class MergeSort extends SortFrame
 	@Override
 	public String getTag()
 	{
-		return "SORT004-merge sort";
+		return "004-merge sort";
 	}
 }

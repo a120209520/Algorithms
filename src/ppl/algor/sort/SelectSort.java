@@ -32,6 +32,6 @@ public class SelectSort extends SortFrame
 	@Override
 	public String getTag()
 	{
-		return "SORT001-select sort";
+		return "001-select sort";
 	}
 }

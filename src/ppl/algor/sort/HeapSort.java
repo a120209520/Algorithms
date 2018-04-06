@@ -40,6 +40,6 @@ public class HeapSort extends SortFrame
 	@Override
 	public String getTag()
 	{
-		return "SORT007-heap sort";
+		return "007-heap sort";
 	}
 }

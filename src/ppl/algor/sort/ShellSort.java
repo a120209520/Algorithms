@@ -34,6 +34,6 @@ public class ShellSort extends SortFrame
 	@Override
 	public String getTag()
 	{
-		return "SORT003-shell sort";
+		return "003-shell sort";
 	}
 }

@@ -54,6 +54,6 @@ public class InsertSort extends SortFrame
 	@Override
 	public String getTag()
 	{
-		return "SORT002-insert sort";
+		return "002-insert sort";
 	}
 }

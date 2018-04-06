@@ -44,6 +44,6 @@ public class Quick3WaySort extends SortFrame
 	@Override
 	public String getTag()
 	{
-		return "SORT006-quick 3way sort";
+		return "006-quick 3way sort";
 	}
 }

@@ -54,6 +54,6 @@ public class QuickSort extends SortFrame
 	@Override
 	public String getTag()
 	{
-		return "SORT005-quick sort";
+		return "005-quick sort";
 	}
 }

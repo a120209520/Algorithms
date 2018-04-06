@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import ppl.algor.struct.PairInt;
@@ -86,6 +87,41 @@ public class FileDataIO
 		}
 	}
 	
+	public static String[] loadWords(String fileName)
+	{
+		File f = new File(dataPath+fileName);
+		BufferedReader br = null;
+		List<String> ls = new ArrayList<>();
+		String temp = null;
+		int size = 0;
+		try
+		{
+			br = new BufferedReader(new FileReader(f));
+			while(null != (temp = br.readLine()))
+			{
+				String[] ss = temp.split(" ");
+				for(String s:ss)
+				{
+					ls.add(s);
+				}
+			}
+			String[] arr = new String[ls.size()];
+			arr = ls.toArray(arr);
+			return arr;
+		} catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+			return null;
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+			return null;
+		} finally
+		{
+			CloseUtil.closeAll(br);
+		}
+	}
+	
 	private static int[] unboxInt(Integer[] arr)
 	{
 		int[] res = new int[arr.length];
@@ -101,6 +137,7 @@ public class FileDataIO
 		tc.start();
 		//loadInt("largeW.txt");
 		//loadPairInt("tinyUF.txt");
+		//String[] ss = loadWords("tinyTale.txt");
 		tc.stop();
 	}
 }
