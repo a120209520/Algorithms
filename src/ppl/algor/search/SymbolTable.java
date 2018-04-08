@@ -4,7 +4,9 @@ package ppl.algor.search;
 public abstract class SymbolTable<K,V>
 {
 	protected int size = 0;
+	protected int capacity = 0;
 	protected long compC = 0;
+	protected long assignC = 0;
 	
 	public abstract void put(K key, V val);
 	public abstract V get(K key);
@@ -26,8 +28,8 @@ public abstract class SymbolTable<K,V>
 	}
 	public long getCounter()
 	{
-		System.out.println("[comp]:"+compC);
-		System.out.println("[total]:"+compC);
+		System.out.println("[comp]:"+compC+" [assign]:"+assignC);
+		System.out.println("[total]:"+(compC+assignC));
 		return compC;
 	}
 }

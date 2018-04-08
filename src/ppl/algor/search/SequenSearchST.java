@@ -2,7 +2,8 @@ package ppl.algor.search;
 
 /**
  * 1.基于链表的符号表
- * 插入N个值: o(N^2/2)
+ * 插入: o(N)
+ * 查找: o(N)
  * @author Smith
  *
  * @param <K>

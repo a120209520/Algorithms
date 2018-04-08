@@ -62,12 +62,26 @@ public class SearchTest
 	}
 	public static void speedTest()
 	{
-		
+		freqCounter(new BinarySearchST<String,Integer>(), "tale.txt");
+		freqCounter(new BST<String,Integer>(), "tale.txt");
+	}
+	public static void basic()
+	{
+		BST<String,Integer> bst = new BST<>();
+		bst.put("b", 0);
+		bst.put("d", 0);
+		bst.put("e", 0);
+		System.out.println(bst.rank("a"));
+		System.out.println(bst.rank("b"));
+		System.out.println(bst.rank("c"));
+		System.out.println(bst.rank("e"));
 	}
 	public static void main(String[] args)
 	{
 		//freqCounterHashMap("tinyTale.txt");
-		freqCounter(new SequenSearchST<String,Integer>(), "tinyTale.txt");
-		freqCounter(new BinarySearchST<String,Integer>(10000), "tinyTale.txt");
+		//freqCounter(new SequenSearchST<String,Integer>(), "tinyTale.txt");
+		//freqCounter(new BinarySearchST<String,Integer>(10000), "tinyTale.txt");
+		basic();
+		//speedTest();
 	}
 }
