@@ -1,7 +1,8 @@
 package ppl.algor.search;
 
+
 /**
- * 3.二叉查找树
+ * 4.红黑树
  * 插入: o(lgN)
  * 查找: o(lgN)
  * @author Smith
@@ -9,32 +10,37 @@ package ppl.algor.search;
  * @param <K>
  * @param <V>
  */
-public class BST<K extends Comparable<K>,V> extends SortedSymbolTable<K, V>
+public class RedBlackTree<K extends Comparable<K>,V> extends SortedSymbolTable<K, V>
 {
+
+	private static final boolean RED = true;
+	private static final boolean BLACK = false;
 	private Node root;
 	
 	private class Node
 	{
-		private K key;
-		private V val;
-		private Node left;
-		private Node right;
-		private int N;
-		public Node(K key, V val, int N)
+		K key;
+		V val;
+		int N;
+		Node left;
+		Node right;
+		boolean color;
+		public Node(K key, V val, int n, boolean color)
 		{
 			this.key = key;
 			this.val = val;
-			this.N = N;
+			N = n;
+			this.color = color;
 		}
 	}
-	public boolean isEmpty()
+	
+	private boolean isRed(Node x)
 	{
-		return root == null;
+		if(null == x)
+			return false;
+		return x.color == RED;
 	}
-	public int size()
-	{
-		return size(root);
-	}
+
 	
 	public int size(Node x)
 	{
@@ -43,6 +49,44 @@ public class BST<K extends Comparable<K>,V> extends SortedSymbolTable<K, V>
 			return x.N;
 		}
 		return 0;
+	}
+	
+	private void updateSize(Node x)
+	{
+		if(null == x)
+			return;
+		x.N = size(x.left) + size(x.right) + 1;
+	}
+	//左旋转
+	private Node rotateLeft(Node x)
+	{
+		Node t = x.right;
+		x.right = t.left;
+		t.left = x;
+		t.color = x.color;
+		x.color = RED;
+		t.N = x.N;
+		updateSize(x);
+		return t;
+	}
+	//右旋转
+	private Node rotateRight(Node x)
+	{
+		Node t = x.left;
+		x.left = t.right;
+		t.right = x;
+		t.color = x.color;
+		x.color = RED;
+		t.N = x.N;
+		updateSize(x);
+		return t;
+	}
+	//颜色转换
+	private void filpColors(Node x)
+	{
+		x.color = RED;
+		x.left.color = BLACK;
+		x.right.color = BLACK;
 	}
 	
 	@Override
@@ -96,29 +140,11 @@ public class BST<K extends Comparable<K>,V> extends SortedSymbolTable<K, V>
 	@Override
 	public void deleteMax()
 	{
-		root = deleteMax(root);
 	}
-	private Node deleteMax(Node x)
-	{
-		if(x.right == null)
-			return x.left;
-		x.right = deleteMax(x.right);
-		x.N = size(x.left) + size(x.right) + 1;
-		return x;
-	}
-	
+
 	@Override
 	public void deleteMin()
 	{
-		root = deleteMin(root);
-	}
-	private Node deleteMin(Node x)
-	{
-		if(x.left == null)
-			return x.right;
-		x.left = deleteMin(x.left);
-		x.N = size(x.left) + size(x.right) + 1;
-		return x;
 	}
 
 	@Override
@@ -209,26 +235,40 @@ public class BST<K extends Comparable<K>,V> extends SortedSymbolTable<K, V>
 	public void put(K key, V val)
 	{
 		root = put(root, key, val);
+		root.color = BLACK;
 	}
 	private Node put(Node x, K key, V val)
 	{
-		if(null == x)
-			return new Node(key,val,1);
+		if (null == x)
+			return new Node(key, val, 1, RED);
 		int cmp = key.compareTo(x.key);
-		compC++;
-		if(cmp > 0)
+		if (cmp > 0)
 		{
-			x.right = put(x.right,key,val);
+			x.right = put(x.right, key, val);
 		}
-		else if(cmp < 0)
+		else if (cmp < 0)
 		{
-			x.left = put(x.left,key,val);
-		}	
+			x.left = put(x.left, key, val);
+		}
 		else
 		{
 			x.val = val;
 		}
-		x.N = size(x.left) + size(x.right) + 1;
+		
+		if( !isRed(x.left) && isRed(x.right) )
+		{
+			x = rotateLeft(x);
+		}
+		if( isRed(x.left) && isRed(x.left.left) )
+		{
+			x = rotateRight(x);
+		}
+		if( isRed(x.left) && isRed(x.right) )
+		{
+			filpColors(x);
+		}
+		
+		updateSize(x);
 		return x;
 	}
 
@@ -260,39 +300,24 @@ public class BST<K extends Comparable<K>,V> extends SortedSymbolTable<K, V>
 	@Override
 	public void delete(K key)
 	{
-		root = delete(root, key);
-	}
-	private Node delete(Node x, K key)
-	{
-		if(x == null)
-			return null;
-		int cmp = key.compareTo(x.key);
-		if(cmp > 0)
-		{
-			x.right = delete(x.right, key);
-		}	
-		else if(cmp < 0)
-		{
-			x.left =  delete(x.left, key);
-		}	
-		else
-		{
-			if (x.right == null) return x.left;
-			if (x.left == null) return x.right;
-			Node t = x;
-			x = min(t.right);
-			x.left = t.left;
-			x.right = deleteMin(t.right);
-		}
-		//x.N = size(x.left) + size(x.right) + 1;
-		x.N--;
-		return x;
 	}
 	
 	@Override
+	public boolean isEmpty()
+	{
+		return root == null;
+	}
+	
+	@Override
+	public int size()
+	{
+		return size(root);
+	}
+
+	@Override
 	public String getTag()
 	{
-		return "SEARCH003-BST";
+		return "SEARCH004-red black tree";
 	}
 
 	@Override

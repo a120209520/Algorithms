@@ -58,30 +58,54 @@ public class SearchTest
 		tc.stop();
 		System.out.println(max+":"+st.get(max));
 		//st.print();
-		st.getCounter();
+		//st.getCounter();
+		System.out.println(st.size());
 	}
 	public static void speedTest()
 	{
-		freqCounter(new BinarySearchST<String,Integer>(), "tale.txt");
-		freqCounter(new BST<String,Integer>(), "tale.txt");
+		//freqCounter(new BinarySearchST<String,Integer>(), "tale.txt");
+		
+		//单次RedBlackTree的插入可能会比BST慢
+		freqCounter(new BST<String,Integer>(), "leipzig1M.txt");
+		freqCounter(new RedBlackTree<String, Integer>(), "leipzig1M.txt");
+	}
+	public static void speedTest2()
+	{
+		//按升序插入效果明显
+		BST<Integer,Integer> bst = new BST<>();
+		RedBlackTree<Integer, Integer> rbt = new RedBlackTree<>();
+		tc.start("BST");
+		for(int i=0; i<10000; i++)
+		{
+			bst.put(i, i);
+			rbt.get(i);
+		}
+		tc.stop();
+		tc.start("RBT");
+		for(int i=0; i<10000; i++)
+		{
+			rbt.put(i, i);
+			rbt.get(i);
+		}
+		tc.stop();
 	}
 	public static void basic()
 	{
-		BST<String,Integer> bst = new BST<>();
-		bst.put("b", 0);
-		bst.put("d", 0);
-		bst.put("e", 0);
-		System.out.println(bst.rank("a"));
-		System.out.println(bst.rank("b"));
-		System.out.println(bst.rank("c"));
-		System.out.println(bst.rank("e"));
+		//BST<String,Integer> bst = new BST<>();
+		RedBlackTree<String, Integer> bst = new RedBlackTree<>();
+
+		bst.put("b", 1);
+		bst.put("d", 2);
+		bst.put("e", 3);
+		bst.put("a", 4);
+		bst.print();
 	}
 	public static void main(String[] args)
 	{
 		//freqCounterHashMap("tinyTale.txt");
 		//freqCounter(new SequenSearchST<String,Integer>(), "tinyTale.txt");
 		//freqCounter(new BinarySearchST<String,Integer>(10000), "tinyTale.txt");
-		basic();
-		//speedTest();
+		//basic();
+		speedTest();
 	}
 }
