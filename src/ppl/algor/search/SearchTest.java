@@ -100,12 +100,24 @@ public class SearchTest
 		bst.put("a", 4);
 		bst.print();
 	}
+	public static void hashTest()
+	{
+		HashST<Integer, String> hst = new HashST<>(10);
+		hst.put(1, "a");
+		hst.put(2, "bb");
+		hst.put(100, "xxx");
+		hst.put(11, "aa");
+		hst.put(1, "u");
+		hst.delete(100);
+		hst.print();
+	}
 	public static void main(String[] args)
 	{
 		//freqCounterHashMap("tinyTale.txt");
 		//freqCounter(new SequenSearchST<String,Integer>(), "tinyTale.txt");
 		//freqCounter(new BinarySearchST<String,Integer>(10000), "tinyTale.txt");
 		//basic();
-		speedTest();
+		//speedTest();
+		hashTest();
 	}
 }

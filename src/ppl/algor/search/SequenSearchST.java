@@ -67,14 +67,22 @@ public class SequenSearchST<K,V> extends SymbolTable<K, V>
 	@Override
 	public void delete(K key)
 	{
+		if(size == 0)
+		{
+			return;
+		}
+		if(head.key.equals(key))
+		{
+			head = head.next;
+			size--;
+			return;
+		}
 		Node temp = head;
-		for(int i=0; i<size-1; i++)
+		for(int i=0; i<size; i++)
 		{
 			compC++;
 			if(temp.next.key.equals(key))
 			{
-				temp.next.key = null;
-				temp.next.val = null;
 				temp.next = temp.next.next;
 				size--;
 			}
@@ -84,8 +92,13 @@ public class SequenSearchST<K,V> extends SymbolTable<K, V>
 	@Override
 	public void print()
 	{
+		if(size == 0)
+		{
+			System.out.println("null");
+			return;
+		}
 		Node temp = head;
-		for(int i=0; i<size-1; i++)
+		for(int i=0; i<size; i++)
 		{
 			System.out.printf("[%s|%s]->",temp.key, temp.val);
 			temp = temp.next;
