@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 /**
  * 1. 低位优先字符串排序
+ * 适用于长度相等的字符串数组
+ * o(N) = WN , 其中W为字符串长度
  * @author Smith
  *
  */

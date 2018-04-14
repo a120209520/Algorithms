@@ -4,6 +4,13 @@ import java.util.Arrays;
 
 import ppl.algor.sort.InsertSort;
 
+/**
+ * 2. 高位优先字符串排序
+ * o(N) = wN , 其中w为字符串平均长度
+ * 适用于R比较小的情况
+ * @author Smith
+ *
+ */
 public class MSD
 {
 	public static final int ASCII = 128;
@@ -16,9 +23,9 @@ public class MSD
 	private static void sort(String[] strs, int R, int left, int right, int d)
 	{
 		int N = right - left + 1;
-		if (1 == N)
+		if (N <= 1)
 			return;
-		if (N <= 12)
+		if (N < 2)
 		{
 			new InsertSort().sort(strs);
 			return;

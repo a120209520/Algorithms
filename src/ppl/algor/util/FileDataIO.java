@@ -122,6 +122,42 @@ public class FileDataIO
 		}
 	}
 	
+	public static PairInt[] loadGraph(String fileName, int[] V)
+	{	
+		File f = new File(dataPath+fileName);
+		BufferedReader br = null;
+		List<PairInt> ls = new ArrayList<>();
+		String temp = null;
+		int size = 0;
+		try
+		{
+			br = new BufferedReader(new FileReader(f));
+			V[0] = Integer.parseInt(br.readLine().trim());
+			size = Integer.parseInt(br.readLine().trim());
+			for(int i=0; i<size; i++)
+			{
+				temp = br.readLine().trim();
+				String[] s = temp.split(" ");
+				PairInt pi = new PairInt(Integer.parseInt(s[0]), Integer.parseInt(s[1]));
+				ls.add(pi);
+			}
+			PairInt[] arr = new PairInt[ls.size()];
+			arr = ls.toArray(arr);
+			return arr;
+		} catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+			return null;
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+			return null;
+		} finally
+		{
+			CloseUtil.closeAll(br);
+		}
+	}
+	
 	private static int[] unboxInt(Integer[] arr)
 	{
 		int[] res = new int[arr.length];
@@ -138,6 +174,8 @@ public class FileDataIO
 		//loadInt("largeW.txt");
 		//loadPairInt("tinyUF.txt");
 		//String[] ss = loadWords("tinyTale.txt");
+		//int[] V = new int[1];
+		//PairInt[] pi = loadGraph("tinyG.txt", V);
 		tc.stop();
 	}
 }

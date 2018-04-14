@@ -1,9 +1,10 @@
 package ppl.algor.string;
 
-import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Random;
 
 import ppl.algor.sort.QuickSort;
+import ppl.algor.sort.SortFrame;
 import ppl.algor.util.TimeCounter;
 
 public class StringTest
@@ -38,17 +39,46 @@ public class StringTest
 	}
 	public static void speedTest()
 	{
-		String[] strs = getRandomStrs(10000);
+		String[] strs = getRandomStrs(1000000);
 		tc.start("QuickSort");
 		new QuickSort().sort(strs);
 		tc.stop();
+		assert SortFrame.isSorted(strs);
+		
+		strs = getRandomStrs(1000000);
 		tc.start("MSD");
 		MSD.sort(strs, MSD.ASCII);
 		tc.stop();
-		//差别好大
+		assert SortFrame.isSorted(strs);
+	}
+	public static void TrieTest()
+	{
+		TrieST<Integer> st = new TrieST<>(TrieST.ASCII_EX);
+		st.put("adfa", 1);
+		st.put("bgfd", 2);
+		st.put("adgg", 3);
+		st.put("adfad", 4);
+		st.delete("adfa");
+		//System.out.println(st.get("a"));
+		Iterator<String> itr = null;
+		itr = st.keys().iterator();
+		//itr = st.keysWithPrefix("ad").iterator();
+		while(itr.hasNext())
+			System.out.println(itr.next());
+	}
+	public static void TSTTest()
+	{
+		TST<Integer> st = new TST<>();
+		st.put("adfa", 1);
+		st.put("bgfd", 2);
+		st.put("adgg", 3);
+		st.put("adfad", 4);
+		System.out.println(st.get("adfa"));
 	}
 	public static void main(String[] args)
 	{
-		speedTest();
+		//speedTest();
+		//TrieTest();
+		TSTTest();
 	}
 }

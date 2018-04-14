@@ -3,6 +3,8 @@ package ppl.algor.search;
 import java.util.HashMap;
 import java.util.Map;
 
+import ppl.algor.string.TST;
+import ppl.algor.string.TrieST;
 import ppl.algor.util.FileDataIO;
 import ppl.algor.util.TimeCounter;
 
@@ -61,13 +63,72 @@ public class SearchTest
 		//st.getCounter();
 		System.out.println(st.size());
 	}
+	public static void freqCounter_TrieST(TrieST<Integer> st, String file)
+	{
+		String[] words = FileDataIO.loadWords(file);
+		tc.start("STRING001-TrieST");
+		String max = "#";
+		st.put(max, 0);
+		for(String word:words)
+		{
+			if(word.length() ==0)
+				continue;
+			if(st.containsKey(word))
+			{
+				st.put(word, st.get(word)+1);
+				if(st.get(word) > st.get(max))
+				{
+					max = word;
+				}
+			}
+			else
+			{
+				st.put(word, 1);
+			}
+		}
+		tc.stop();
+		System.out.println(max+":"+st.get(max));
+		System.out.println("[memory]:"+st.max);
+	}
+	public static void freqCounter_TST(TST<Integer> st, String file)
+	{
+		String[] words = FileDataIO.loadWords(file);
+		tc.start("STRING002-TST");
+		String max = "#";
+		st.put(max, 0);
+		for(String word:words)
+		{
+			if(word.length() ==0)
+				continue;
+			if(st.containsKey(word))
+			{
+				st.put(word, st.get(word)+1);
+				if(st.get(word) > st.get(max))
+				{
+					max = word;
+				}
+			}
+			else
+			{
+				st.put(word, 1);
+			}
+		}
+		tc.stop();
+		System.out.println(max+":"+st.get(max));
+		System.out.println("[memory]:"+st.max);
+	}
 	public static void speedTest()
 	{
 		//freqCounter(new BinarySearchST<String,Integer>(), "tale.txt");
 		
 		//单次RedBlackTree的插入可能会比BST慢
-		freqCounter(new BST<String,Integer>(), "leipzig1M.txt");
-		freqCounter(new RedBlackTree<String, Integer>(), "leipzig1M.txt");
+//		freqCounter(new BST<String,Integer>(), "leipzig1M.txt");
+//		freqCounter(new RedBlackTree<String, Integer>(), "leipzig1M.txt");
+//		freqCounter_TrieST(new TrieST<Integer>(TrieST.ASCII), "leipzig1M.txt");
+		
+		//TST内存消耗少很多
+		freqCounter_TrieST(new TrieST<Integer>(TrieST.ASCII), "leipzig1M.txt");
+		freqCounter_TST(new TST<Integer>(), "leipzig1M.txt");
 	}
 	public static void speedTest2()
 	{
@@ -117,7 +178,7 @@ public class SearchTest
 		//freqCounter(new SequenSearchST<String,Integer>(), "tinyTale.txt");
 		//freqCounter(new BinarySearchST<String,Integer>(10000), "tinyTale.txt");
 		//basic();
-		//speedTest();
-		hashTest();
+		speedTest();
+		//hashTest();
 	}
 }
